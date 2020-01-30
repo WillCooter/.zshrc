@@ -33,6 +33,11 @@ alias opteo='code opteo.code-workspace'
 alias project='code project.code-workspace'
 alias edit='code ~/.bash_profile'
 alias apply='source ~/.bash_profile'
+alias gpush='git push origin'
+alias gpull='git pull origin'
+alias gs='git status'
+alias gc='git commit -a -m '
+alias gd='git diff'
 
 function prompt {
     local BLACK="\[\033[0;30m\]"
@@ -120,6 +125,11 @@ function help {
     echo " edit      →      code ~/.bash_profile"
     echo " apply     →      source ~/.bash_profile"
     echo " gaben     →      gaben"
+    echo " gpush     →      git push origin"
+    echo " gpull     →      git pull origin"
+    echo " gs        →      git status"
+    echo " gc        →      git commit -a -m "
+    echo " gd        →      git diff"
 }
 
 prompt
