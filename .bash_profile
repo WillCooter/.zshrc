@@ -29,9 +29,7 @@ alias ls='ls -l'
 alias ..='cd ../'
 alias home="cd ~"
 alias cls='clear'
-alias opteo='code opteo.code-workspace'
-alias project='code project.code-workspace'
-alias edit='code ~/.bash_profile'
+alias edit='vim ~/.bash_profile'
 alias apply='source ~/.bash_profile'
 alias gpush='git push origin'
 alias gpull='git pull origin'
@@ -120,16 +118,14 @@ function help {
     echo " ..        →      cd ../"
     echo " home      →      cd ~"
     echo " cls       →      clear"
-    echo " opteo     →      code opteo.code-workspace"
-    echo " project   →      code project.code-workspace"
-    echo " edit      →      code ~/.bash_profile"
+    echo " edit      →      vim ~/.bash_profile"
     echo " apply     →      source ~/.bash_profile"
-    echo " gaben     →      gaben"
     echo " gpush     →      git push origin"
     echo " gpull     →      git pull origin"
     echo " gs        →      git status"
     echo " gc        →      git commit -a -m"
     echo " gd        →      git diff"
+    echo " gaben     →      gaben"
 }
 
 prompt
