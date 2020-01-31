@@ -33,9 +33,9 @@ alias edit='vim ~/.bash_profile'
 alias apply='source ~/.bash_profile'
 alias gpush='git push origin'
 alias gpull='git pull origin'
-alias gs='git status'
-alias gc='git commit -a -m'
-alias gd='git diff'
+alias gstatus='git status'
+alias gcommit='git commit -a -m'
+alias gdiff='git diff'
 
 function prompt {
     local BLACK="\[\033[0;30m\]"
@@ -122,9 +122,9 @@ function help {
     echo " apply     →      source ~/.bash_profile"
     echo " gpush     →      git push origin"
     echo " gpull     →      git pull origin"
-    echo " gs        →      git status"
-    echo " gc        →      git commit -a -m"
-    echo " gd        →      git diff"
+    echo " gstatus   →      git status"
+    echo " gcommit   →      git commit -a -m"
+    echo " gdiff     →      git diff"
     echo " gaben     →      gaben"
 }
 
