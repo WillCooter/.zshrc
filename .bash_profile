@@ -36,7 +36,7 @@ alias apply='source ~/.bash_profile'
 alias gpush='git push origin'
 alias gpull='git pull origin'
 alias gs='git status'
-alias gc='git commit -a -m '
+alias gc='git commit -a -m'
 alias gd='git diff'
 
 function prompt {
@@ -128,7 +128,7 @@ function help {
     echo " gpush     →      git push origin"
     echo " gpull     →      git pull origin"
     echo " gs        →      git status"
-    echo " gc        →      git commit -a -m "
+    echo " gc        →      git commit -a -m"
     echo " gd        →      git diff"
 }
 
