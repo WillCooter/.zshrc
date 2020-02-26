@@ -46,6 +46,10 @@ function gpull {
   echo "git pull origin $1"
   git pull origin $1
 }
+function gfetch {
+  echo "git fetch"
+  git fetch
+}
 function gstatus {
   echo "git status"
   git status
@@ -168,6 +172,7 @@ function help {
     echo " apply     →      source ~/.bash_profile"
     echo " gpush     →      git push origin"
     echo " gpull     →      git pull origin"
+    echo " gfetch    →      git fetch"
     echo " gstatus   →      git status"
     echo " gcommit   →      git commit -a -m"
     echo " gdiff     →      git diff"
