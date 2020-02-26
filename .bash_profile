@@ -29,16 +29,55 @@ alias ls='ls -l'
 alias ..='cd ../'
 alias home="cd ~"
 alias cls='clear'
-alias edit='vim ~/.bash_profile'
-alias apply='source ~/.bash_profile'
-alias gpush='git push origin'
-alias gpull='git pull origin'
-alias gstatus='git status'
-alias gcommit='git commit -a -m'
-alias gdiff='git diff'
-alias gcheckout='git checkout'
-alias glog='git log'
-alias gclean='git checkout .'
+
+function edit {
+  echo "vim ~/.bash_profile"
+  vim ~/.bash_profile
+}
+function apply {
+  echo "source ~/.bash_profile"
+  source ~/.bash_profile
+}
+function gpush {
+  echo "git push origin $1"
+  git push origin $1
+}
+function gpull {
+  echo "git pull origin $1"
+  git pull origin $1
+}
+function gstatus {
+  echo "git status"
+  git status
+}
+function gcommit {
+  echo "git commit -a -m $1 $2"
+  git commit -a -m $1 $2
+}
+function gdiff {
+  echo "git diff"
+  git diff
+}
+function gcheckout {
+  echo "git checkout $1"
+  git checkout $1
+}
+function glog {
+  echo "git log"
+  git log
+}
+function gclean {
+  echo "git checkout ."
+  git checkout .
+}
+function greset {
+  echo "reset --hard origin/$1"
+  git reset --hard origin/$1
+}
+function gdelete {
+  echo "git branch -d $1"
+  git branch -d $1
+}
 
 function prompt {
   local BLACK="\[\033[0;30m\]"
@@ -135,6 +174,8 @@ function help {
     echo " gcheckout →      git checkout"
     echo " glog      →      git log"
     echo " gclean    →      git checkout ."
+    echo " greset    →      git reset --hard origin/"
+    echo " gdelete   →      git branch -d"
     echo " gaben     →      gaben"
 }
 
