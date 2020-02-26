@@ -25,61 +25,112 @@ LIGHT_PURPLE='\033[1;35m'
 LIGHT_CYAN='\033[1;36m'
 WHITE='\033[1;37m'
 
+function parse_git_branch {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+function branch_name {
+  git branch --no-color | grep -E '^\*' | awk '{print $2}' \
+    || echo "default_value"
+}
+
 alias ls='ls -l'
 alias ..='cd ../'
 alias home="cd ~"
 alias cls='clear'
 
 function edit {
-  echo "vim ~/.bash_profile"
+  echo -e "${RED}>>> vim ~/.bash_profile${WHITE}${NORM}"
   vim ~/.bash_profile
 }
 function apply {
-  echo "source ~/.bash_profile"
+  echo -e "${RED}>>> source ~/.bash_profile${WHITE}${NORM}"
   source ~/.bash_profile
 }
+function gcommit {
+  if [ $# -eq 0 ]
+  then
+    echo -e "${RED}${BOLD}Enter a commit message:${YELLOW}${NORM}"
+    commit_message=
+    while [[ $commit_message = "" ]]; do
+      read commit_message
+    done
+    echo -e "${RED}>>> git commit -a -m ${BOLD}$commit_message${WHITE}${NORM}"
+    git commit -a -m "$commit_message"
+  else
+    echo -e "${RED}>>> git commit -a -m $1${WHITE}${NORM}"
+    git commit -a -m $1
+  fi
+}
 function gpush {
-  echo "git push origin $1"
-  git push origin $1
+  if [[ -n $(git status -s) ]]
+  then
+    echo -e "${RED}${BOLD}Enter a commit message:${YELLOW}${NORM}"
+    commit_message=
+    while [[ $commit_message = "" ]]; do
+      read commit_message
+    done
+    echo -e "${RED}>>> git commit -a -m ${BOLD}$commit_message${WHITE}${NORM}"
+    git commit -a -m "$commit_message"
+  fi
+  if [ $# -eq 0 ]
+  then
+    echo -e "${RED}>>> git push origin ${BOLD}`branch_name`${WHITE}${NORM}"
+    git push origin `branch_name`
+  else
+    echo -e "${RED}>>> git push origin ${BOLD}$1${WHITE}${NORM}"
+    git push origin $1
+  fi
 }
 function gpull {
-  echo "git pull origin $1"
-  git pull origin $1
+  if [ $# -eq 0 ]
+  then
+    echo -e "${RED}>>> git pull origin ${BOLD}`branch_name`${WHITE}${NORM}"
+    git pull origin `branch_name`
+  else
+    echo -e "${RED}>>> git pull origin ${BOLD}$1${WHITE}${NORM}"
+    git pull origin $1
+  fi
 }
 function gfetch {
-  echo "git fetch"
+  echo -e "${RED}>>> git fetch${WHITE}${NORM}"
   git fetch
 }
 function gstatus {
-  echo "git status"
+  echo -e "${RED}>>> git status${WHITE}${NORM}"
   git status
 }
-function gcommit {
-  echo "git commit -a -m $1 $2"
-  git commit -a -m $1 $2
+function gadd {
+  if [ $# -eq 0 ]
+  then
+    echo -e "${RED}>>> git add ${BOLD}*${WHITE}${NORM}"
+    git add *
+  else
+    echo -e "${RED}>>> git add ${BOLD}$1${WHITE}${NORM}"
+    git add $1
+  fi
 }
 function gdiff {
-  echo "git diff"
+  echo -e "${RED}>>> git diff${WHITE}${NORM}"
   git diff
 }
 function gcheckout {
-  echo "git checkout $1"
+  echo -e "${RED}>>> git checkout${WHITE}${NORM}"
   git checkout $1
 }
 function glog {
-  echo "git log"
+  echo -e "${RED}>>> git log${WHITE}${NORM}"
   git log
 }
 function gclean {
-  echo "git checkout ."
+  echo -e "${RED}>>> git checkout .${WHITE}${NORM}"
   git checkout .
 }
 function greset {
-  echo "reset --hard origin/$1"
+  echo -e "${RED}>>> git reset --hard origin/${BOLD}$1${WHITE}${NORM}"
   git reset --hard origin/$1
 }
 function gdelete {
-  echo "git branch -d $1"
+  echo -e "${RED}>>> git branch -d ${BOLD}$1${WHITE}${NORM}"
   git branch -d $1
 }
 
@@ -101,10 +152,6 @@ function prompt {
   local WHITE="\[\033[0;37m\]"
   local WHITEBOLD="\[\033[1;37m\]"
   local RESETCOLOR="\[\e[00m\]"
-
-  parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-  }
 
   export PS1="\n$YELLOWBOLD\u $YELLOW\w -$YELLOWBOLD\$(parse_git_branch) \n $GREENBOLD\A\[$(tput sgr0)\] $GREEN[\#] → $RESETCOLOR"
   export PS2=" | → $RESETCOLOR"
