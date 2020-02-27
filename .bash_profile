@@ -113,9 +113,13 @@ function gdiff {
   echo -e "${RED}>>> git diff${WHITE}${NORM}"
   git diff
 }
-function gcheckout {
+function gcheck {
   echo -e "${RED}>>> git checkout${WHITE}${NORM}"
   git checkout $1
+}
+function gbranch {
+  echo -e "${RED}>>> git branch${WHITE}${NORM}"
+  git branch
 }
 function glog {
   echo -e "${RED}>>> git log${WHITE}${NORM}"
@@ -130,8 +134,37 @@ function greset {
   git reset --hard origin/$1
 }
 function gdelete {
-  echo -e "${RED}>>> git branch -d ${BOLD}$1${WHITE}${NORM}"
-  git branch -d $1
+  echo -e "${RED}>>> git branch -D ${BOLD}$1${WHITE}${NORM}"
+  git branch -D $1
+}
+function gprune {
+  echo -e "${RED}>>> git remote prune origin --dry-run${WHITE}${NORM}"
+  git remote prune origin --dry-run
+  if [[ -z $(git remote prune origin --dry-run) ]]
+  then
+    echo -e "${RED}${BOLD}Nothing to prune.${WHITE}${NORM}"
+  else
+    echo -e "${RED}${BOLD}Prune these branches? ${YELLOW}${NORM}"
+    read input
+    if [[ $input == y* || $input = Y* ]]
+    then
+      echo -e "${RED}>>> git remote prune origin${WHITE}${NORM}"
+      git remote prune origin
+    else
+      echo -e "${RED}${BOLD}Canceling prune...${WHITE}${NORM}"
+    fi
+  fi
+}
+function gpurge {
+  echo -e "${RED}${BOLD}This will attempt to remove all local branches except 'dev'. Continue?${WHITE}${NORM}"
+  read input
+  if [[ $input == y* || $input = Y* ]]
+  then
+    echo -e "${RED}>>> git branch | grep -v 'dev' | xargs git branch -d${WHITE}${NORM}"
+    git branch | grep -v "dev" | xargs git branch -d
+  else
+    echo -e "${RED}${BOLD}Canceling purge...${WHITE}${NORM}"
+  fi
 }
 
 function prompt {
@@ -210,25 +243,29 @@ function gaben {
 }
 
 function help {
-    echo -e " ${UNDERLINED}${LIGHT_RED}command${NORM}   ${LIGHT_RED}→      ${UNDERLINED}code${NORM}${RED}"
-    echo " ls        →      ls -l"
-    echo " ..        →      cd ../"
-    echo " home      →      cd ~"
-    echo " cls       →      clear"
-    echo " edit      →      vim ~/.bash_profile"
-    echo " apply     →      source ~/.bash_profile"
-    echo " gpush     →      git push origin"
-    echo " gpull     →      git pull origin"
-    echo " gfetch    →      git fetch"
-    echo " gstatus   →      git status"
-    echo " gcommit   →      git commit -a -m"
-    echo " gdiff     →      git diff"
-    echo " gcheckout →      git checkout"
-    echo " glog      →      git log"
-    echo " gclean    →      git checkout ."
-    echo " greset    →      git reset --hard origin/"
-    echo " gdelete   →      git branch -d"
-    echo " gaben     →      gaben"
+  echo -e " ${UNDERLINED}${LIGHT_RED}command${NORM}   ${LIGHT_RED}→      ${UNDERLINED}code${NORM}${RED}"
+  echo " ls        →      ls -l"
+  echo " ..        →      cd ../"
+  echo " home      →      cd ~"
+  echo " cls       →      clear"
+  echo " edit      →      vim ~/.bash_profile"
+  echo " apply     →      source ~/.bash_profile"
+  echo " gcommit   →      git commit -a -m"
+  echo " gpush     →      git push origin"
+  echo " gpull     →      git pull origin"
+  echo " gfetch    →      git fetch"
+  echo " gstatus   →      git status"
+  echo " gadd      →      git sadd"
+  echo " gdiff     →      git diff"
+  echo " gcheck    →      git checkout"
+  echo " gbranch   →      git branch"
+  echo " glog      →      git log"
+  echo " gclean    →      git checkout ."
+  echo " greset    →      git reset --hard origin/"
+  echo " gdelete   →      git branch -D"
+  echo " gprune    →      git remote prune origin"
+  echo " gpurge    →      git branch | grep -v "dev" | xargs git branch -d"
+  echo " gaben     →      gaben"
 }
 
 prompt
