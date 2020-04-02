@@ -62,8 +62,8 @@ function branch_name {
     || echo "default_value"
 }
 
-export PS1="\n${YELLOW}\u\w -\$(parse_git_branch) \n ${GREEN}\A [\#] → ${NORM}"
-export PS2="${GREEN} | → ${NORM}"
+export PS1="\n\[\033[1;33m\]\u \[\033[0;33m\]\w -\[\033[1;33m\]\$(parse_git_branch) \n \[\033[1;32m\]\A \[\033[0;32m\][\#] → $NORM"
+export PS2="\[\033[0;32m\] | → $NORM"
 
 alias ls='ls -l'
 alias ..='cd ../'
