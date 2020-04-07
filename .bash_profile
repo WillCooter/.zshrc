@@ -165,7 +165,7 @@ function gnewbranch {
   then
     echo -e "${REDTEXT}${BOLD}Must supply a name for new branch${NORM}"
   else
-    echo -e "${REDTEXT}>>> git checkout -b ${BOLD}$1 ${NORM}`branch_name`${NORM}"
+    echo -e "${REDTEXT}>>> git checkout -b ${BOLD}$1 `branch_name`${NORM}"
     git checkout -b $1 `branch_name`
   fi  
 }
