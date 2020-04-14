@@ -71,11 +71,15 @@ alias home="cd ~"
 alias cls='clear'
 
 function edit {
-  echo -e "${REDTEXT}>>> vim ~/.bash_profile${NORM}"
+  echo -e "${REDTEXT}>>> vim ${BOLD}~/.bash_profile${NORM}"
   vim ~/.bash_profile
 }
+function editvs {
+  echo -e "${REDTEXT}>>> code ${BOLD}~/.bash_profile${NORM}"
+  code ~/.bash_profile
+}
 function apply {
-  echo -e "${REDTEXT}>>> source ~/.bash_profile${NORM}"
+  echo -e "${REDTEXT}>>> source ${BOLD}~/.bash_profile${NORM}"
   source ~/.bash_profile
 }
 function gcommit {
@@ -124,6 +128,15 @@ function gpull {
     echo -e "${REDTEXT}>>> git pull origin ${BOLD}$1${NORM}"
     git pull origin $1
   fi
+}
+function gpullall {
+  for i in */.git
+  do (
+    cd $i/..
+    echo -e "${REDTEXT}>>> git pull origin ${BOLD}`branch_name`${NORM}"
+    git pull origin `branch_name`
+  )
+  done
 }
 function gfetch {
   echo -e "${REDTEXT}>>> git fetch${NORM}"
@@ -174,6 +187,8 @@ function gmerge {
   then
     echo -e "${REDTEXT}${BOLD}Must supply a branch to merge from${NORM}"
   else
+    echo -e "${REDTEXT}>>> git pull origin ${BOLD}$1${NORM}"
+    git pull origin $1	
     echo -e "${REDTEXT}>>> git merge ${BOLD}$1${NORM}"
     git merge $1
   fi
@@ -235,9 +250,10 @@ function help {
   echo " gcommit      →      git commit -a -m"
   echo " gpush        →      git push origin"
   echo " gpull        →      git pull origin"
+  echo " gpullall     →      git pull origin [all repos]"
   echo " gfetch       →      git fetch"
   echo " gstatus      →      git status"
-  echo " gadd         →      git sadd"
+  echo " gadd         →      git add"
   echo " gdiff        →      git diff"
   echo " gcheck       →      git checkout"
   echo " gnewbranch   →      git checkout -b"
