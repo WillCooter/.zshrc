@@ -70,6 +70,9 @@ alias ..='cd ../'
 alias home="cd ~"
 alias cls='clear'
 
+function please {
+  sudo $@
+}
 function edit {
   echo -e "${REDTEXT}>>> vim ${BOLD}~/.bash_profile${NORM}"
   vim ~/.bash_profile
@@ -241,11 +244,13 @@ function gpurge {
 
 function help {
   echo -e " ${REDBACK}${BLACKTEXT} COMMAND ${NORM}           ${REDBACK}${BLACKTEXT} FUNCTION ${NORM}${REDTEXT}"
+  echo " please       →      sudo"
   echo " ls           →      ls -l"
   echo " ..           →      cd ../"
   echo " home         →      cd ~"
   echo " cls          →      clear"
   echo " edit         →      vim ~/.bash_profile"
+  echo " editvs       →      code ~/.bash_profile"
   echo " apply        →      source ~/.bash_profile"
   echo " gcommit      →      git commit -a -m"
   echo " gpush        →      git push origin"
