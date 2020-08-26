@@ -73,6 +73,9 @@ alias cls='clear'
 function please {
   sudo $@
 }
+function hmmm {
+  echo -e "\n            ಠ_ಠ   \n"
+}
 function edit {
   echo -e "${REDTEXT}>>> vim ${BOLD}~/.bash_profile${NORM}"
   vim ~/.bash_profile
@@ -96,7 +99,7 @@ function gcommit {
     echo -e "${REDTEXT}>>> git commit -a -m ${BOLD}$commit_message${NORM}"
     git commit -a -m "$commit_message"
   else
-    echo -e "${REDTEXT}>>> git commit -a -m $1${NORM}"
+    echo -e "${REDTEXT}>>> git commit -a -m ${BOLD}$1${NORM}"
     git commit -a -m $1
   fi
 }
@@ -162,6 +165,10 @@ function gadd {
 function gdiff {
   echo -e "${REDTEXT}>>> git diff${NORM}"
   git diff
+}
+function gstat {
+  echo -e "${REDTEXT}>>> git diff --stat${NORM}"
+  git diff --stat
 }
 function gcheck {
   if [ $# -eq 0 ]
@@ -241,12 +248,24 @@ function gpurge {
     echo -e "${REDTEXT}${BOLD}Canceling purge...${NORM}"
   fi
 }
+function shownode {
+  echo -e "${REDTEXT}${BOLD}ps aux | grep node${NORM}"
+  ps aux | grep node
+}
+function killnode {
+  echo -e "${REDTEXT}${BOLD}pkill -f node${NORM}"
+  pkill -f node
+}
+function weather {
+  curl wttr.in/London?format="%l:+%c++%t+%w+%m"
+}
 
 function help {
   echo -e " ${REDBACK}${BLACKTEXT} COMMAND ${NORM}           ${REDBACK}${BLACKTEXT} FUNCTION ${NORM}${REDTEXT}"
   echo " please       →      sudo"
   echo " ls           →      ls -l"
   echo " ..           →      cd ../"
+  echo " hmmm         →      hmmm"
   echo " home         →      cd ~"
   echo " cls          →      clear"
   echo " edit         →      vim ~/.bash_profile"
@@ -260,6 +279,7 @@ function help {
   echo " gstatus      →      git status"
   echo " gadd         →      git add"
   echo " gdiff        →      git diff"
+  echo " gstat        →      git diff --stat"
   echo " gcheck       →      git checkout"
   echo " gnewbranch   →      git checkout -b"
   echo " gmerge       →      git merge"
@@ -270,6 +290,11 @@ function help {
   echo " gdelete      →      git branch -D"
   echo " gprune       →      git remote prune origin"
   echo " gpurge       →      git branch | grep -v dev | xargs git branch -d"
+  echo " shownode     →      ps aux | grep node"
+  echo " killnode     →      pkill -f node"
+  echo " weather      →      curl wttr.in/London?format='%l:+%c++%t+%w+%m'"
 }
 
+date
+weather
 echo "set completion-ignore-case On" >> ~/.inputrc
