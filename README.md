@@ -1,2 +1,1 @@
-# bash-profile
-my custom bash profile
+my custom .bashrc config
