@@ -106,6 +106,7 @@ function apply {
 
 # GIT FUNCTIONS
 function gcommit {
+    git diff --stat
     printline "${REDTEXT}${BOLD}Enter a commit message:${NORM}"
     commit_message=
     while [[ $commit_message = "" ]]; do
@@ -119,13 +120,7 @@ function gpush {
     git add *
     if [[ -n $(git status -s) ]]
     then
-        printline "${REDTEXT}${BOLD}Enter a commit message:${NORM}"
-        commit_message=
-        while [[ $commit_message = "" ]]; do
-            read commit_message
-        done
-        printline "${REDTEXT}>>> git commit -a -m ${BOLD}$commit_message${NORM}"
-        git commit -a -m "$commit_message"
+        gcommit
     fi
     printline "${REDTEXT}>>> git push origin ${BOLD}`branch_name`${NORM}"
     git push origin `branch_name`
@@ -133,6 +128,21 @@ function gpush {
 function gpull {
     printline "${REDTEXT}>>> git pull origin ${BOLD}`branch_name`${NORM}"
     git pull origin `branch_name`
+}
+function gadd {
+    printline "${REDTEXT}>>> git add ${BOLD}*${NORM}"
+    git add *
+}
+function gmerge {
+    if [ $# -eq 0 ]
+    then
+        printline "${REDTEXT}${BOLD}Must supply a branch to merge from${NORM}"
+    else
+        printline "${REDTEXT}>>> git pull origin ${BOLD}$1${NORM}"
+        git pull origin $1	
+        printline "${REDTEXT}>>> git merge ${BOLD}$1${NORM}"
+        git merge $1
+    fi
 }
 function gfetch {
     printline "${REDTEXT}>>> git fetch${NORM}"
@@ -142,9 +152,9 @@ function gstatus {
     printline "${REDTEXT}>>> git status ${BOLD}-s${NORM}"
     git status -s
 }
-function gadd {
-    printline "${REDTEXT}>>> git add ${BOLD}*${NORM}"
-    git add *
+function glog {
+    printline "${REDTEXT}>>> git log${NORM}"
+    git log
 }
 function gdiff {
     printline "${REDTEXT}>>> git diff${NORM}"
@@ -175,21 +185,6 @@ function gnewbranch {
         printline "${REDTEXT}>>> git checkout -b ${BOLD}$1 `branch_name`${NORM}"
         git checkout -b $1 `branch_name`
     fi  
-}
-function gmerge {
-    if [ $# -eq 0 ]
-    then
-        printline "${REDTEXT}${BOLD}Must supply a branch to merge from${NORM}"
-    else
-        printline "${REDTEXT}>>> git pull origin ${BOLD}$1${NORM}"
-        git pull origin $1	
-        printline "${REDTEXT}>>> git merge ${BOLD}$1${NORM}"
-        git merge $1
-    fi
-}
-function glog {
-    printline "${REDTEXT}>>> git log${NORM}"
-    git log
 }
 function gdelete {
     printline "${REDTEXT}>>> git branch -D ${BOLD}$1${NORM}"
@@ -235,15 +230,16 @@ function help {
     printline " gcommit      →      git commit -a -m"
     printline " gpush        →      git push origin"
     printline " gpull        →      git pull origin"
+    printline " gadd         →      git add"
+    printline " gmerge       →      git merge"
     printline " gfetch       →      git fetch"
     printline " gstatus      →      git status"
-    printline " gadd         →      git add"
+    printline " glog         →      git log"
     printline " gdiff        →      git diff"
     printline " gstat        →      git diff --stat"
     printline " gcheck       →      git checkout"
-    printline " gnewbranch   →      git checkout -b"
-    printline " gmerge       →      git merge"
     printline " gbranch      →      git branch"
+    printline " gnewbranch   →      git checkout -b"
     printline " gdelete      →      git branch -D"
     printline " gpurge       →      git branch -D (all branches except dev)"
 }
