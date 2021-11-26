@@ -1,1 +1,1 @@
-My personal bash configuration files. Mostly aliases and git scripts
+My personal .zshrc configuration file. Mostly aliases and git scripts.
